@@ -22,13 +22,25 @@ const BoardContent = styled.div`
 `;
 
 const RowWrapper = styled.div`
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #BBB;
   display: flex;
   flex-grow: 1;
   flex-direction: row;
 
   &:first-child {
     border-top: 1px solid black;
+  }
+
+  &:nth-child(3) {
+    border-bottom: 1px solid black;
+  }
+
+  &:nth-child(6) {
+    border-bottom: 1px solid black;
+  }
+
+  &:nth-child(9) {
+    border-bottom: 1px solid black;
   }
 `;
 

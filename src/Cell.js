@@ -2,14 +2,27 @@ import React from 'react';
 import styled from 'styled-components';
 
 const CellBaseStyle = styled.div`
-  border-right: 1px solid black;
+  border-right: 1px solid #BBB;
   border-collapse: collapse;
   display: flex;
   flex-basis: 9.1%;
   flex-grow: 1;
   flex-flow: row wrap;
+
   &:first-child {
     border-left: 1px solid black;
+  }
+
+  &:nth-child(3) {
+    border-right: 1px solid black;
+  }
+
+  &:nth-child(6) {
+    border-right: 1px solid black;
+  }
+
+  &:nth-child(9) {
+    border-right: 1px solid black;
   }
 `;
 
