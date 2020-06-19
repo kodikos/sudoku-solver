@@ -5,6 +5,8 @@ import Cell from './Cell';
 const GridWrapper = styled.div`
   position: relative;
   width: 50%;
+  min-width: 200px;
+  max-width: 600px;
 
   &:after {
     content: "";

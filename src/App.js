@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import Page from './Page';
 import Grid from './Grid';
 import boardDefs from './presetBoards';
-import { validate } from './analyzer';
+import { validate, fillPossibilities } from './analyzer';
 
 function createCell(value = null) {
   return {
     value,
     possibles: [],
-    error: false
+    error: false,
+    groupError: false,
+    original: value !== null
   }
 }
 
@@ -30,6 +32,7 @@ function App() {
   const changeBoard = (boardDefIdx) => {
     let newBoard = initializeFromBoardTemplate(boardDefs[boardDefIdx].def);
     newBoard = validate(newBoard);
+    newBoard = fillPossibilities(newBoard);
     setBoard(newBoard);
   }
 

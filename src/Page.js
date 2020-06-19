@@ -1,12 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ContentWrapper = styled.div`
-  display: flex;
+const PageWrapper = styled.div`
   margin: 10px;
 `;
 
-const BoardOuter = styled.div``;
+const ContentWrapper = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+`;
+
 const SidePanel = styled.div`
   margin-left: 10px;
 `;
@@ -19,7 +22,7 @@ const BoardSelectBtn = styled.button`
 
 export default function Page({ children, onBoardSelect, boardPresets }) {
   return (
-    <div>
+    <PageWrapper>
       <h1>Sudoku be Solved!</h1>
       <ContentWrapper>
         {children}
@@ -31,6 +34,6 @@ export default function Page({ children, onBoardSelect, boardPresets }) {
           )}
         </SidePanel>
       </ContentWrapper>
-    </div>
+    </PageWrapper>
   );
 }

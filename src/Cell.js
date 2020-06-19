@@ -1,7 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const fillPossibles = (possibles) => Array(9).fill(null).map(
+  (v, idx) => possibles.includes(idx + 1) ? idx + 1 : null);
+
 const CellBaseStyle = styled.div`
+  background: ${({ groupError, original }) => {
+    if (groupError && original) return '#f4dcdc';
+    if (groupError) return '#ffd1d1';
+    if (original) return '#EEE'; 
+    return 'white';
+  }};
   border-right: 1px solid #BBB;
   border-collapse: collapse;
   display: flex;
@@ -26,29 +35,41 @@ const CellBaseStyle = styled.div`
   }
 `;
 
+const PossiblesGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  height: 100%;
+  width: 100%;
+`;
+
 const MainValue = styled.span`
   display: inline-block;
   flex-grow: 1;
   font-size: calc(20px + 20 * ((100vw - 200px) / (680)));
   margin: auto;
   text-align: center;
-  color: ${({errorState}) => errorState ? 'red' : 'black'}
+  color: ${({error}) => error ? 'red' : 'black'}
 `;
 
 const Possible = styled.span`
   display: inline-block;
   flex-basis: 33.3333%;
   flex-grow: 1;
-  font-size: calc(8px + 4 * ((100vw - 200px) / (680)));
+  font-size: calc(10px + 4 * ((100vw - 200px) / (680)));
   margin: auto;
   text-align: center;
 `;
 
-export default function Cell({ value, possibles, error }) {
+const Possibles = ({ possibles }) => fillPossibles(possibles)
+  .map((possible, idx) => <Possible key={idx}>{possible || ' '}</Possible>);
+
+export default function Cell(props) {
+  const { value, possibles } = props;
   return (
-    <CellBaseStyle>
-      {value!==null && <MainValue errorState={error}>{value}</MainValue>}
-      {value===null && possibles.map((possible) => <Possible>{possible}</Possible>)}
+    <CellBaseStyle {...props}>
+      {value!==null && <MainValue {...props}>{value}</MainValue>}
+      {value===null && <PossiblesGrid><Possibles possibles={possibles} /></PossiblesGrid>}
     </CellBaseStyle>
   );
 }

@@ -18,7 +18,7 @@ export default function boardObj(board) {
     getCol,
     getBlockAt,
 
-    getBlockOf: (board, x, y) => getBlockAt(
+    getBlockOf: (x, y) => getBlockAt(
       Math.floor(x / 3), 
       Math.floor(y / 3)
     ),
@@ -30,5 +30,7 @@ export default function boardObj(board) {
     forEachBlock: (cb) => blockIndices.map(
       (by) => blockIndices.map(
         (bx) => cb(getBlockAt(bx, by), bx, by))),
+
+    forEachCell: (cb) => board.forEach((row, y) => row.forEach((cell, x) => cb(cell, x, y))),
   }
 }
