@@ -32,6 +32,7 @@ const MainValue = styled.span`
   font-size: calc(20px + 20 * ((100vw - 200px) / (680)));
   margin: auto;
   text-align: center;
+  color: ${({errorState}) => errorState ? 'red' : 'black'}
 `;
 
 const Possible = styled.span`
@@ -43,10 +44,10 @@ const Possible = styled.span`
   text-align: center;
 `;
 
-export default function Cell({ value, possibles }) {
+export default function Cell({ value, possibles, error }) {
   return (
     <CellBaseStyle>
-      {value!==null && <MainValue>{value}</MainValue>}
+      {value!==null && <MainValue errorState={error}>{value}</MainValue>}
       {value===null && possibles.map((possible) => <Possible>{possible}</Possible>)}
     </CellBaseStyle>
   );

@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import Page from './Page';
-import Board from './Board';
+import Grid from './Grid';
 import boardDefs from './presetBoards';
+import { validate } from './analyzer';
 
 function createCell(value = null) {
   return {
     value,
-    possibles: []
+    possibles: [],
+    error: false
   }
 }
 
@@ -26,12 +28,14 @@ function App() {
   const [ board, setBoard ] = useState(initializeEmptyBoard());
 
   const changeBoard = (boardDefIdx) => {
-    setBoard(initializeFromBoardTemplate(boardDefs[boardDefIdx].def));
+    let newBoard = initializeFromBoardTemplate(boardDefs[boardDefIdx].def);
+    newBoard = validate(newBoard);
+    setBoard(newBoard);
   }
 
   return (
     <Page onBoardSelect={(defIdx) => changeBoard(defIdx)} boardPresets={boardDefs}>
-      <Board contents={board} />
+      <Grid contents={board} />
     </Page>
   );
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Cell from './Cell';
 
-const BoardWrapper = styled.div`
+const GridWrapper = styled.div`
   position: relative;
   width: 50%;
 
@@ -13,7 +13,7 @@ const BoardWrapper = styled.div`
   }
 `;
 
-const BoardContent = styled.div`
+const GridContent = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -44,7 +44,7 @@ const RowWrapper = styled.div`
   }
 `;
 
-function BoardRow({ row }) {
+function GridRow({ row }) {
   return (
     <RowWrapper>
       {row.map((cell, idx) => <Cell key={idx} {...cell} />)}
@@ -52,12 +52,12 @@ function BoardRow({ row }) {
   );
 }
 
-export default function Board({ contents }) {
+export default function Grid({ contents }) {
   return (
-    <BoardWrapper>
-      <BoardContent>
-        {contents.map((row, idx) => <BoardRow key={idx} row={row} />)}
-      </BoardContent>
-    </BoardWrapper>
+    <GridWrapper>
+      <GridContent>
+        {contents.map((row, idx) => <GridRow key={idx} row={row} />)}
+      </GridContent>
+    </GridWrapper>
   );
 }

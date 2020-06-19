@@ -13,7 +13,7 @@ const SidePanel = styled.div`
 const BoardSelectBtn = styled.button`
   display: block;
   font-size: 16px;
-  margin: 5px;
+  margin-bottom: 5px;
   padding: 3px;
 `;
 
@@ -25,7 +25,7 @@ export default function Page({ children, onBoardSelect, boardPresets }) {
         {children}
         <SidePanel>
           {boardPresets.map((preset, idx) =>
-            <BoardSelectBtn onClick={() => onBoardSelect(idx)}>
+            <BoardSelectBtn key={idx} onClick={() => onBoardSelect(idx)}>
               {preset.name}
             </BoardSelectBtn>
           )}
