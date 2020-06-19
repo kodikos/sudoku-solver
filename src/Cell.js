@@ -5,6 +5,7 @@ const CellBaseStyle = styled.div`
   border-right: 1px solid black;
   border-collapse: collapse;
   display: flex;
+  flex-basis: 9.1%;
   flex-grow: 1;
   flex-flow: row wrap;
   &:first-child {

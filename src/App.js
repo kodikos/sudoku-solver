@@ -1,25 +1,38 @@
 import React, { useState } from 'react';
+import Page from './Page';
 import Board from './Board';
+import boardDefs from './presetBoards';
 
-function createCell() {
+function createCell(value = null) {
   return {
-    value: null,
-    possibles: [1,2,3,4,5,6,7,8,9]
+    value,
+    possibles: []
   }
 }
 
-function initializeBoard() {
+function initializeEmptyBoard() {
   return Array(9).fill().map(() => Array(9).fill().map(() => createCell()));
 }
 
+function initializeFromBoardTemplate(boardDef) {
+  return boardDef.match(/([\d ]{9})/g).map(
+    (row) => row.match(/([\d ])/g).map(
+      (cell) => createCell(
+        ['0', ' '].includes(cell) ? null : parseInt(cell)
+      )));
+}
+
 function App() {
-  const [ board, setBoard ] = useState(initializeBoard());
+  const [ board, setBoard ] = useState(initializeEmptyBoard());
+
+  const changeBoard = (boardDefIdx) => {
+    setBoard(initializeFromBoardTemplate(boardDefs[boardDefIdx].def));
+  }
 
   return (
-    <div className="App">
-      <h1>Sudoku be Solved!</h1>
+    <Page onBoardSelect={(defIdx) => changeBoard(defIdx)} boardPresets={boardDefs}>
       <Board contents={board} />
-    </div>
+    </Page>
   );
 }
 

@@ -35,7 +35,7 @@ const RowWrapper = styled.div`
 function BoardRow({ row }) {
   return (
     <RowWrapper>
-      {row.map((cell) => <Cell {...cell} />)}
+      {row.map((cell, idx) => <Cell key={idx} {...cell} />)}
     </RowWrapper>
   );
 }
@@ -44,7 +44,7 @@ export default function Board({ contents }) {
   return (
     <BoardWrapper>
       <BoardContent>
-        {contents.map((row) => <BoardRow row={row} />)}
+        {contents.map((row, idx) => <BoardRow key={idx} row={row} />)}
       </BoardContent>
     </BoardWrapper>
   );
