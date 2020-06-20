@@ -4,25 +4,29 @@ import Grid from './Grid';
 import boardDefs from './presetBoards';
 import { validate, fillPossibilities } from './analyzer';
 
-function createCell(value = null) {
+function createCell(value = null, x, y) {
   return {
     value,
+    x,
+    y,
     possibles: [],
     error: false,
     groupError: false,
-    original: value !== null
+    original: value !== null,
   }
 }
 
 function initializeEmptyBoard() {
-  return Array(9).fill().map(() => Array(9).fill().map(() => createCell()));
+  return Array(9).fill().map((i1, y) => Array(9).fill().map((i2, x) => createCell(null, x, y)));
 }
 
 function initializeFromBoardTemplate(boardDef) {
   return boardDef.match(/([\d ]{9})/g).map(
-    (row) => row.match(/([\d ])/g).map(
-      (cell) => createCell(
-        ['0', ' '].includes(cell) ? null : parseInt(cell)
+    (row, y) => row.match(/([\d ])/g).map(
+      (cell, x) => createCell(
+        ['0', ' '].includes(cell) ? null : parseInt(cell),
+        x,
+        y
       )));
 }
 

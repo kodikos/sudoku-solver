@@ -4,61 +4,22 @@ import Cell from './Cell';
 
 const GridWrapper = styled.div`
   position: relative;
-  width: 50%;
-  min-width: 200px;
-  max-width: 600px;
-
-  &:after {
-    content: "";
-    display: block;
-    padding-bottom: 100%;
-  }
+  width: 80%;
+  min-width: 350px;
+  max-width: 500px;
 `;
 
 const GridContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  position: absolute;
-  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(9, 1fr);
 `;
-
-const RowWrapper = styled.div`
-  border-bottom: 1px solid #BBB;
-  display: flex;
-  flex-grow: 1;
-  flex-direction: row;
-
-  &:first-child {
-    border-top: 1px solid black;
-  }
-
-  &:nth-child(3) {
-    border-bottom: 1px solid black;
-  }
-
-  &:nth-child(6) {
-    border-bottom: 1px solid black;
-  }
-
-  &:nth-child(9) {
-    border-bottom: 1px solid black;
-  }
-`;
-
-function GridRow({ row }) {
-  return (
-    <RowWrapper>
-      {row.map((cell, idx) => <Cell key={idx} {...cell} />)}
-    </RowWrapper>
-  );
-}
 
 export default function Grid({ contents }) {
   return (
     <GridWrapper>
       <GridContent>
-        {contents.map((row, idx) => <GridRow key={idx} row={row} />)}
+        {contents.map((row, y) => row.map((cell, x) => <Cell key={y*10+x} {...cell} />))}
       </GridContent>
     </GridWrapper>
   );

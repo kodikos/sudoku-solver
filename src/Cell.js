@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import './Cell.sass';
 
 const fillPossibles = (possibles) => Array(9).fill(null).map(
   (v, idx) => possibles.includes(idx + 1) ? idx + 1 : null);
@@ -12,26 +13,21 @@ const CellBaseStyle = styled.div`
     return 'white';
   }};
   border-right: 1px solid #BBB;
-  border-collapse: collapse;
-  display: flex;
-  flex-basis: 9.1%;
-  flex-grow: 1;
-  flex-flow: row wrap;
+  border-bottom: 1px solid #BBB;
+  position: relative;
 
-  &:first-child {
-    border-left: 1px solid black;
+  &::before {
+    content: '';
+    display: block;
+    padding-top: 100%;
   }
 
-  &:nth-child(3) {
-    border-right: 1px solid black;
-  }
-
-  &:nth-child(6) {
-    border-right: 1px solid black;
-  }
-
-  &:nth-child(9) {
-    border-right: 1px solid black;
+  & > * {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
   }
 `;
 
@@ -45,8 +41,7 @@ const PossiblesGrid = styled.div`
 
 const MainValue = styled.span`
   display: inline-block;
-  flex-grow: 1;
-  font-size: calc(20px + 20 * ((100vw - 200px) / (680)));
+  font-size: min(max(7vw, 32px), 46px);
   margin: auto;
   text-align: center;
   color: ${({error}) => error ? 'red' : 'black'}
@@ -54,9 +49,7 @@ const MainValue = styled.span`
 
 const Possible = styled.span`
   display: inline-block;
-  flex-basis: 33.3333%;
-  flex-grow: 1;
-  font-size: calc(10px + 4 * ((100vw - 200px) / (680)));
+  font-size: min(max(2vw, 10px), 12px);
   margin: auto;
   text-align: center;
 `;
@@ -64,10 +57,27 @@ const Possible = styled.span`
 const Possibles = ({ possibles }) => fillPossibles(possibles)
   .map((possible, idx) => <Possible key={idx}>{possible || ' '}</Possible>);
 
+function createClasses(x, y) {
+  const classes = [];
+  //  border-struct - outer border structure
+  if (y === 0) classes.push('border-struct-t');
+  if (y === 8) classes.push('border-struct-b');
+  if (x === 0) classes.push('border-struct-l');
+  if (x === 8) classes.push('border-struct-r');
+  //  block-struct - inner block borders
+  if (y === 2) classes.push('block-struct-b');
+  if (y === 5) classes.push('block-struct-b');
+  if (x === 2) classes.push('block-struct-r');
+  if (x === 5) classes.push('block-struct-r');
+  return classes;
+}
+
 export default function Cell(props) {
-  const { value, possibles } = props;
+  const { value, possibles, x , y } = props;
+  const classes = createClasses(x, y);
+
   return (
-    <CellBaseStyle {...props}>
+    <CellBaseStyle {...props} className={classes.join(' ')}>
       {value!==null && <MainValue {...props}>{value}</MainValue>}
       {value===null && <PossiblesGrid><Possibles possibles={possibles} /></PossiblesGrid>}
     </CellBaseStyle>
