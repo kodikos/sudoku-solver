@@ -15,11 +15,13 @@ const GridContent = styled.div`
   grid-template-rows: repeat(9, 1fr);
 `;
 
-export default function Grid({ contents }) {
+export default function Grid({ contents, onPossibleClick }) {
   return (
     <GridWrapper>
       <GridContent>
-        {contents.map((row, y) => row.map((cell, x) => <Cell key={y*10+x} {...cell} />))}
+        {contents.map((row, y) => row.map((cell, x) => (
+          <Cell key={y*10+x} {...cell} onPossibleClick={onPossibleClick} />
+        )))}
       </GridContent>
     </GridWrapper>
   );

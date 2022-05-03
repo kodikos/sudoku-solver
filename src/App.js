@@ -33,16 +33,25 @@ function initializeFromBoardTemplate(boardDef) {
 function App() {
   const [ board, setBoard ] = useState(initializeEmptyBoard());
 
-  const changeBoard = (boardDefIdx) => {
+  const resetBoard = (boardDefIdx) => {
     let newBoard = initializeFromBoardTemplate(boardDefs[boardDefIdx].def);
     newBoard = validate(newBoard);
     newBoard = fillPossibilities(newBoard);
     setBoard(newBoard);
   }
 
+  const updateBoard = (x, y, action, value) => {
+    //<<<<<<<<GOTHERE: trying to set value and redo board
+    const current = board.getBoard();
+    current[x][y] = value;
+    current = validate(current);
+    current = fillPossibilities(current);
+    setBoard(current);
+  }
+
   return (
-    <Page onBoardSelect={(defIdx) => changeBoard(defIdx)} boardPresets={boardDefs}>
-      <Grid contents={board} />
+    <Page onBoardSelect={(defIdx) => resetBoard(defIdx)} boardPresets={boardDefs}>
+      <Grid contents={board} onPossibleClick={(x, y, idx) => updateBoard(x, y, 'set', idx)} />
     </Page>
   );
 }
